@@ -66,7 +66,12 @@ NSString * WebViewJavascriptBridge_js() {
 			message['callbackId'] = callbackId;
 		}
 		sendMessageQueue.push(message);
+		messagingIframe = document.createElement('iframe');
+		messagingIframe.style.display = 'none';
 		messagingIframe.src = CUSTOM_PROTOCOL_SCHEME + '://' + QUEUE_HAS_MESSAGE;
+		document.documentElement.appendChild(messagingIframe);
+		messagingIframe.parentNode.removeChild(messagingIframe);
+		messagingIframe = null;
 	}
 
 	function _fetchQueue() {
@@ -120,6 +125,8 @@ NSString * WebViewJavascriptBridge_js() {
 	messagingIframe.style.display = 'none';
 	messagingIframe.src = CUSTOM_PROTOCOL_SCHEME + '://' + QUEUE_HAS_MESSAGE;
 	document.documentElement.appendChild(messagingIframe);
+	messagingIframe.parentNode.removeChild(messagingIframe);
+	messagingIframe = null;
 
 	registerHandler("_disableJavascriptAlertBoxSafetyTimeout", disableJavscriptAlertBoxSafetyTimeout);
 	
